@@ -1,0 +1,169 @@
+---
+output:
+  word_document: default
+  pdf_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r, echo=FALSE, include=FALSE}
+library(dplyr)
+library(tibble)
+library(plyr)
+library(tidyr)
+library(ggplot2)
+
+
+df_incl=read.delim('./input/included_studies.csv',sep=',')
+df_data=read.delim('./input/extracted_data.csv',sep=',')
+
+# with specialty
+t=df_incl%>%select(c(X.source..id,specialty))
+df_data_spec=join(df_data, t, by='X.source..id', type="left")
+#df_data_spec=df_data_spec%>%select(-29)
+
+df_search=read.delim('./input/search.csv',sep=',')
+df_summary=read.delim('./input/summary_data.csv', sep=',')
+
+first_round=nrow(df_incl)
+
+df_incl=df_incl%>%mutate(data_available=ifelse(X.source..id %in% unique(df_data$X.source..id), 1,0))
+
+df_data$IDstudy=paste(df_data$study, df_data$year.of.study)
+df_corr_au=read.delim('./input/characteristics_of_reviews.csv',sep=',')
+# adds whether the corresponding author was a surgeon or not
+df_summary=left_join(df_summary,df_corr_au, by='X.source..id')
+df_summary=join(df_summary, t, by='X.source..id', type="left")
+
+# consider not using as you got to do it by outcome
+#uniquereviews=df_summary[!duplicated(df_summary$X.source..id),]
+
+# map specialties to X.source..id and get the data_available from THERE
+
+
+```
+
+
+Figure 1. PRISMA study selection flowchart
+
+\newpage
+
+Table 1. Eligible comparisons of surgical versus medical interventions
+
+```{r Table 1, echo=FALSE,include=TRUE}
+temp=df_summary%>%select(surgical_arm, medical_arm,disease,Outcome,no..of.studies, TOTAL)%>%
+  mutate(Outcome=paste0(Outcome,' (',no..of.studies,'/',TOTAL,')'))%>%
+  select(-c(no..of.studies,TOTAL))
+knitr::kable(temp, col.names=c('Surgical arm','Drug arm','Disease', 'Outcomes (studies/N)'))
+```
+
+\newpage
+
+Table 2. Comparisons with effective surgical treatment and those with more effective medical treatment 
+
+Table 2A. Comparisons with effective surgical treatment
+
+```{r Table 2A,echo=FALSE,include=TRUE}
+
+temp=df_summary%>%filter(direction=='surgical')%>%select(surgical_arm, medical_arm,disease,Outcome,effect,effect_type, CI.low,CI.high,direction,GRADE.assessment)%>%mutate(Treatment_effect=paste0(round(effect,2),' (',round(CI.low,2),'-',round(CI.high,2),')'))%>%select(-c(effect,CI.low,CI.high))%>%arrange(desc(direction))%>%select(surgical_arm,medical_arm, disease,Outcome, effect_type, Treatment_effect, GRADE.assessment)
+
+
+knitr::kable(temp, col.names=c('Surgical arm','Drug arm','Disease', 'Outcome','Effect type', 'Treatment effect (95% CI)','GRADE assessment'))
+
+```
+
+Table 2B. Comparisons with effective drug treatment
+```{r Table 2B,echo=FALSE,include=TRUE}
+temp=df_summary%>%filter(direction=='drug')%>%select(surgical_arm, medical_arm,disease,Outcome,effect,effect_type, CI.low,CI.high,direction,GRADE.assessment)%>%mutate(Treatment_effect=paste0(round(effect,2),' (',round(CI.low,2),'-',round(CI.high,2),')'))%>%select(-c(effect,CI.low,CI.high))%>%arrange(desc(direction))%>%select(surgical_arm,medical_arm, disease,Outcome,effect_type,Treatment_effect, GRADE.assessment)
+
+knitr::kable(temp, col.names=c('Surgical arm','Drug arm','Disease', 'Outcome','Effect type', 'Treatment effect (95% CI)','GRADE assessment'))
+
+```
+\newpage
+Table 3. Review direction of effects of reviews compared to re-analysis (second is the reanalysis)
+```{r Table ox, echo=FALSE, include=TRUE}
+df_re_anal=read.csv('./input/re_meta_manual.csv')[1:105,]
+
+           
+
+knitr::kable(table(df_summary$direction))
+knitr::kable(table(df_re_anal$direction_re))
+```
+
+\newpage
+Table 4. Preponderance of direction of RCT results, and Journal type
+```{r Table o, echo=FALSE, include=TRUE}
+df_rct=read.csv('./input/journal_RCT.csv')
+
+knitr::kable(table(df_rct$Journal_type,df_rct$direction))
+```
+```{r Table oxx, echo=FALSE, include=TRUE}
+df_rct=read.csv('./input/journal_RCT.csv')
+
+knitr::kable(table(df_summary$outcome_type,df_summary$direction))
+```
+\newpage
+
+Table 5. GRADE assessment across specialties
+```{r Table 4, echo=FALSE, include=TRUE}
+
+temp=df_summary %>%
+  group_by(GRADE.assessment, specialty) %>%
+  tally()%>%
+  spread(GRADE.assessment, n)
+
+names(temp)[2]='None available'
+temp[,2:6][is.na(temp[,2:6])] = 0
+
+temp$Total <- rowSums( temp[,2:6] )
+
+temp=temp%>%mutate_at(c("Low", "Very Low","Moderate","High","None available"), ~paste0(.,' (',round(.x/Total*100,0),')'))%>%select(-Total)
+
+temp=temp[,c(1,6,4,5,3,2)]
+knitr::kable(temp, col.names=c("Specialty","Very Low", "Low","Moderate","High","None available"))
+
+```
+
+\newpage
+
+# Supplementary material
+[titlepage]
+
+\newpage
+
+Supplementary table 1. Reviews per specialty
+```{r table X, echo=FALSE, include=TRUE}
+# fix this so that it is only for the studies that are in the data extraction
+
+tab=as.data.frame(df_incl%>%group_by(specialty)%>%dplyr::summarise(n_studies=sum(data_available),Total=n(), Percentage=round(sum(data_available)/n()*100,0)))
+
+# Add fisher's exact test for sequestration across whatever
+
+temp=cbind(tab$n_studies, tab$Total-tab$n_studies)
+seq_p=fisher.test(temp,simulate.p.value = TRUE)$p
+
+
+tab=tab%>%mutate(n_studies=paste0(n_studies,' (',Percentage,')'))%>%dplyr::select(specialty,Total,n_studies)
+
+knitr::kable(tab, col.names=c('Specialty','Total reviews','Reviews with comparison (%)'))
+
+print(paste0('Fisher\'s exact test, p = ',as.character(round(seq_p,2))))
+```
+
+\newpage
+
+Supplementary Table 2. Inconclusive comparisons between surgery and drugs
+
+```{r Supplementary Table 2,echo=FALSE,include=TRUE}
+
+temp=df_summary%>%filter(direction=='inconclusive')%>%select(surgical_arm, medical_arm,disease,Outcome,effect,effect_type, CI.low,CI.high,direction,GRADE.assessment)%>%mutate(Treatment_effect=paste0(round(effect,2),' (',round(CI.low,2),'-',round(CI.high,2),')'))%>%select(-c(effect,CI.low,CI.high))%>%arrange(desc(direction))%>%select(surgical_arm,medical_arm, disease,Outcome,effect_type,Treatment_effect, GRADE.assessment)
+
+knitr::kable(temp, col.names=c('Surgical arm','Drug arm','Disease', 'Outcome','Effect type', 'Treatment effect (95% CI)','GRADE assessment'))
+
+```
+
+
