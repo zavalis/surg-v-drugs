@@ -1,6 +1,6 @@
 # Confidence intervals throughout the paper
 library(fastR2)
-
+library(dplyr)
 # Rate of sequestration
 a=0.995
 wilson.ci(41,n=187,conf.level=a)
@@ -19,6 +19,16 @@ table(df_summary$direction)
 # Rate of direction being inconclusive
 wilson.ci(52,n=103,conf.level=a)
 52/103
+
+# read summary data csv
+df_summary=read.csv('./input/summary_data.csv')
+df_all=read.csv('./input/included_studies.csv')
+dat_contain=unique(df_summary$X.source..id)
+df_all=df_all%>%mutate(Dat=ifelse(X.source..id %in% dat_contain,1,0))
+table(df_all$specialty, df_all$Dat)
+
+power.chisq.test(ncp = 15, df = 20,
+                 alpha = 0.05, plot = TRUE)
 
 # Rate of directions stratified for outcome type
 ## mortality
@@ -80,6 +90,7 @@ median(RCT$year.of.study)
 IQR(RCT$year.of.study)
 
 
+
 # The rate of high GRADE evidence
 x=nrow(df_summary%>%filter(GRADE.assessment=='High'))
 wilson.ci(x,n=103,conf.level=a)
@@ -106,3 +117,31 @@ x/103
 x=nrow(df_summary%>%filter(GRADE.assessment==''))
 wilson.ci(x,n=103,conf.level=a)
 x/103
+
+# for interrater reliability
+irr=read.csv('./manual_review/abstract_screening_combined.csv')
+library(irr)
+x=irr %>% filter_all(any_vars(. %in% c(1)))
+nrow(x[x['jockew1989']==x['zavalis'],])/nrow(x)
+
+# agreement on the reviews coded by either as exclude
+x=irr %>% filter_all(any_vars(. %in% c(2)))
+nrow(x[x['jockew1989']==x['zavalis'],])/nrow(x)
+check=x[x['jockew1989']!=x['zavalis'],]
+table(check$zavalis,check$jockew1989)
+
+x=irr %>% filter_all(any_vars(. %in% c(3)))
+nrow(x[x['jockew1989']==x['zavalis'],])/nrow(x)
+
+
+x=irr %>% filter_all(any_vars(. %in% c(1,3)))
+y=irr %>% filter_all(any_vars(. %in% c(2)))
+x['zavalis']='1'
+x['jockew1989']='1'
+joined=rbind(x,y)
+joined=(joined[!duplicated(joined$X.source..id),])
+
+
+kappa2(joined[, c("zavalis", "jockew1989")], weight = "unweighted")
+
+

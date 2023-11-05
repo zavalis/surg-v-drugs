@@ -33,22 +33,25 @@ library(tidyverse)
 cont_ma=df_md%>%
   group_split(INFO=factor(INFO))%>%
   map_dfr(~.x%>%summarise(INFO=first(INFO),
-                          title=first(title),
-                          surgical_arm=first(surgical_arm),
-                          medical_arm=first(medical_arm),
-                          Outcome=first(Outcome),
-                          fx_type=first(fx_type),
-                          
-                          effect=(unlist(summary(metacont(n.e=all.surg,
+                                 title=first(title),
+                                 surgical_arm=first(surgical_arm),
+                                 medical_arm=first(medical_arm),
+                                 Outcome=first(Outcome),
+                                 fx_type=first(fx_type),
+                                 effect=(unlist(summary(metacont(data=.x,
+                                                                 n.e=all.surg,
                                                           mean.e=mean.surg,
                                                           sd.e=SD.surg, 
                                                           n.c=all.control,
                                                           mean.c=mean.control,
                                                           sd.c=SD.control,
                                                           sm=first(fx_type),
-                                                          method.random.ci = "HK"))$random)[1]),
-                          
-                          ci.lb=(unlist(summary(metacont(n.e=all.surg,
+                                                          method.random.ci = "HK"
+                                                          )
+                                                          )$random)[1]),
+                                 
+                                 ci.lb=(unlist(summary(metacont(data=.x,
+                                                                n.e=all.surg,
                                                          mean.e=mean.surg,
                                                          sd.e=SD.surg, 
                                                          n.c=all.control,
@@ -56,15 +59,26 @@ cont_ma=df_md%>%
                                                          sd.c=SD.control,
                                                          sm=first(fx_type),
                                                          method.random.ci = "HK"))$random)[3]),
-                          
-                          ci.ub=(unlist(summary(metacont(n.e=all.surg,
+                                 
+                                 ci.ub=(unlist(summary(metacont(data=.x,
+                                                                n.e=all.surg,
                                                          mean.e=mean.surg,
                                                          sd.e=SD.surg, 
                                                          n.c=all.control,
                                                          mean.c=mean.control,
                                                          sd.c=SD.control,
                                                          sm=first(fx_type),
-                                                         method.random.ci = "HK"))$random)[4])))
+                                                         method.random.ci = "HK"))$random)[4]),
+                                 
+                                 I2=(unlist(summary(metacont(data=.x,
+                                                             n.e=all.surg,
+                                                         mean.e=mean.surg,
+                                                         sd.e=SD.surg, 
+                                                         n.c=all.control,
+                                                         mean.c=mean.control,
+                                                         sd.c=SD.control,
+                                                         sm=first(fx_type),
+                                                         method.random.ci = "HK")))[['I2']])))
 
 
 ## CATEGORICAL EFFECT TYPE META-ANALYSIS
@@ -77,7 +91,8 @@ cat_ma=df_nonmd%>%
                           Outcome=first(Outcome),
                           fx_type=first(fx_type),
                           
-                          effect=exp(unlist(summary(metabin(event.surg,
+                          effect=exp(unlist(summary(metabin(data=.x,
+                                                            event.surg,
                                                             all.surg, 
                                                             event.control,
                                                             all.control, 
@@ -85,7 +100,8 @@ cat_ma=df_nonmd%>%
                                                             method.random.ci = "HK", 
                                                             sm=first(fx_type)))$random)[1]),
                           
-                          ci.lb=exp(unlist(summary(metabin(event.surg,
+                          ci.lb=exp(unlist(summary(metabin(data=.x,
+                                                           event.surg,
                                                            all.surg, 
                                                            event.control,
                                                            all.control, 
@@ -93,15 +109,32 @@ cat_ma=df_nonmd%>%
                                                            method.random.ci = "HK",
                                                            sm=first(fx_type)))$random)[3]),
                           
-                          ci.ub=exp(unlist(summary(metabin(event.surg,
+                          ci.ub=exp(unlist(summary(metabin(data=.x,
+                                                           event.surg,
                                                            all.surg, 
                                                            event.control,
                                                            all.control, 
                                                            method='MH',
                                                            method.random.ci = "HK",
-                                                           sm=first(fx_type)))$random)[4]) ))
+                                                           sm=first(fx_type)))$random)[4]),
+                         
+          
+                          I2=(unlist(summary(
+                                             metabin(data=.x,
+                                                        event.surg,
+                                                        all.surg, 
+                                                        event.control,
+                                                        all.control, 
+                                                        method='MH',
+                                                        method.random.ci = "HK",
+                                                        sm=first(fx_type)))[['I2']]))))
 
 re_ma=rbind(cat_ma,cont_ma)
+
+# get i2 median and IQR
+i2_rema=re_ma%>%filter(I2!='NA')
+median(i2_rema$I2)
+quantile(i2_rema$I2, probs = c(0.25,0.75))
 
 write.csv(re_ma,'re_meta.csv')
 # Following this the effects are classified according to direction 
@@ -119,9 +152,93 @@ temp=temp[temp['Outcome']=='Complete miscarriage\n',]
 temp=temp[temp['medical_arm']=='Misoprostol and mifepristone',]
 
 # FOR BINARY OUTCOMES
-summary(metabin(event.surg,all.surg, event.control,all.control,data=temp, sm='RR', random=TRUE, method='MH'))
+summary(metabin(event.surg,all.surg, event.control,all.control,data=temp, sm='RR', random=TRUE, method='MH'))$random
+
 
 # FOR CONTINUOUS OUTCOMES
 summary(metacont(n.e=all.surg,mean.e=mean.control,sd.e=SD.surg, n.c=all.control,mean.c=mean.surg,sd.c=SD.control, data=temp,
          sm='SMD'))$random
+
+# what is needed is for all individual studies get the RR and stdev 
+# we dont have high enough n across all but add an NA when there is none!
+# then you perform metabias on it or whatevar
+# then you perform tes on it! 
+
+# Get the yi and vi columns for smooth assessment of excess significance and egger functions
+dat_cat=escalc(measure="RR", ai=event.surg, n1i=all.surg, ci=event.control, n2i=all.control, data=df_nonmd)
+dat_cont=escalc(measure="SMD", m1i=mean.surg, sd1i=SD.surg ,n1i=all.surg, m2i=mean.control,sd2i=SD.control, n2i=all.control, data=df_md)
+
+# TESS for all studies
+TESS_cont=dat_cont%>%
+  group_split(INFO=factor(INFO))%>%
+  map_dfr(~.x%>%summarise(INFO=first(INFO),
+                          title=first(title),
+                          surgical_arm=first(surgical_arm),
+                          medical_arm=first(medical_arm),
+                          Outcome=first(Outcome),
+                          fx_type=first(fx_type),
+                          
+                          TESS_p=tes(yi, vi,data=.x,test='chi2')['pval'][1]
+  ))      
+
+TESS_cat=dat_cat%>%
+  group_split(INFO=factor(INFO))%>%
+  map_dfr(~.x%>%summarise(INFO=first(INFO),
+                          title=first(title),
+                          surgical_arm=first(surgical_arm),
+                          medical_arm=first(medical_arm),
+                          Outcome=first(Outcome),
+                          fx_type=first(fx_type),
+                          
+                          TESS_p=tes(yi, vi,data=.x,test='chi2')['pval'][1]
+                            ))        
+
+TESS_study_level=rbind(TESS_cat,TESS_cont)%>%as.data.frame()
+TESS_study_level=TESS_study_level%>%mutate(TESS_p=as.numeric(TESS_p))
+write.csv(TESS_study_level,'./TESS_per_metaanalysis.csv')
+
+# Number of indications of excess significance
+TESS_study_level%>%filter(TESS_p<0.05)%>%nrow()
+TESS_study_level%>%filter(TESS_p<0.05)
+TESS_study_level%>%filter(TESS_p<0.05)%>%nrow()/nrow(TESS_study_level)
+
+
+# Excess significance
+# combine them for test of excess significance
+tes_df=rbind(dat_cat,dat_cont)
+tes(yi, vi, data=tes_df,test='chi2')
+
+# Egger regression
+# 5/296 have 10 or more studies
+# therefore do for 3 or more studies w/o power
+egg_prep_cat=dat_cat%>%count(INFO)%>%filter(n>2)
+egg_prep_cont=dat_cont%>%count(INFO)%>%filter(n>2)
+egg_cat <- filter(dat_cat, dat_cat$INFO %in% egg_prep_cat$INFO)
+egg_cont <- filter(dat_cont, dat_cont$INFO %in% egg_prep_cont$INFO)
+
+cat_egg=egg_cat%>%
+  group_split(INFO=factor(INFO))%>%
+  map_dfr(~.x%>%summarise(INFO=first(INFO),
+                          title=first(title),
+                          surgical_arm=first(surgical_arm),
+                          medical_arm=first(medical_arm),
+                          Outcome=first(Outcome),
+                          fx_type=first(fx_type),
+                          EGGer_p=(regtest(yi, vi, data=.x,model="rma")$pval)[1]))
+
+cont_egg=egg_cont%>%
+  group_split(INFO=factor(INFO))%>%
+  map_dfr(~.x%>%summarise(INFO=first(INFO),
+                          title=first(title),
+                          surgical_arm=first(surgical_arm),
+                          medical_arm=first(medical_arm),
+                          Outcome=first(Outcome),
+                          fx_type=first(fx_type),
+                          EGGer_p=(regtest(yi, vi, data=.x,model="rma")$pval)[1]))
+
+Egger_test=rbind(cat_egg,cont_egg)
+
+write.csv(Egger_test,'./Egger.csv')
+table(Egger_test$EGGer_p<0.05)
+5/31
 
