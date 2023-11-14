@@ -1,0 +1,89 @@
+,X.source..id,title,Outcome,surgical_arm,medical_arm,study,year.of.study,unique.ab.,fx_type,event.surg,all.surg,event.control,all.control,RCT_ID,Notes
+1,CD001122.PUB5,Laparoscopic ovarian drilling for ovulation induction in women with anovulatory polycystic ovary syndrome,Live birth,Laparoscopic ovarian drilling,Medical ovulation induction,Abdellah,2011,,OR,16,73,23,74,Abdellah 2011,
+2,CD010287.PUB3,Aromatase inhibitors (letrozole) for subfertile women with polycystic ovary syndrome,Live birth,Laparoscopic ovarian drilling,Letrozele,Abdellah,2011,,RR,16,73,23,74,Abdellah 2011,
+3,CD001122.PUB5,Laparoscopic ovarian drilling for ovulation induction in women with anovulatory polycystic ovary syndrome,Multiple pregnancy,Laparoscopic ovarian drilling,Medical ovulation induction,Abdellah,2011,,OR,0,73,0,74,Abdellah 2011,
+4,CD007223.PUB4,Medical treatments for incomplete miscarriage,"Complete miscarriage
+",Suction aspiration,Vaginal or oral misoprostol,Bique,2007,,RR,101,101,101,111,Bique 2007,
+5,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,"Complete miscarriage
+",Suction aspiration,Misoprostol,Bique,2007,,RR,101,101,101,111,Bique 2007,
+6,CD007223.PUB4,Medical treatments for incomplete miscarriage,Surgical evacuation,Suction aspiration,Vaginal or oral misoprostol,Bique,2007,,RR,101,101,10,111,Bique 2007,
+7,CD007223.PUB4,Medical treatments for incomplete miscarriage,"Complete miscarriage
+",Suction aspiration,Vaginal or oral misoprostol,Chigbu,2012,,RR,160,160,158,160,Chigbu 2012,
+8,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,"Complete miscarriage
+",Suction aspiration,Misoprostol,Chigbu,2012,,RR,160,160,158,160,Chigbu 2012,
+9,CD007223.PUB4,Medical treatments for incomplete miscarriage,Surgical evacuation,Suction aspiration,Vaginal or oral misoprostol,Chigbu,2012,,RR,160,160,2,160,Chigbu 2012,
+10,CD007223.PUB4,Medical treatments for incomplete miscarriage,"Complete miscarriage
+",Suction aspiration,Vaginal or oral misoprostol,Dabash,2010,,RR,346,347,342,348,Dabash 2010,
+11,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,"Complete miscarriage
+",Suction aspiration,Misoprostol,Dabash,2010,,RR,346,347,342,348,Dabash 2010,
+12,CD007223.PUB4,Medical treatments for incomplete miscarriage,Death or serious complication,Suction aspiration,Vaginal or oral misoprostol,Dabash,2010,,RR,0,347,0,348,Dabash 2010,
+13,CD007223.PUB4,Medical treatments for incomplete miscarriage,"Complete miscarriage
+",Suction aspiration,Vaginal or oral misoprostol,Dao,2007,,RR,222,224,206,218,Dao 2007,
+14,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,"Complete miscarriage
+",Suction aspiration,Misoprostol,Dao,2007,,RR,222,224,206,218,Dao 2007,
+15,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,Composite outcome of death or serious complication,Suction aspiration,Misoprostol,Dao,2007,,RR,0,224,1,218,Dao 2007,
+16,CD007223.PUB4,Medical treatments for incomplete miscarriage,Surgical evacuation,Suction aspiration,Vaginal or oral misoprostol,Dao,2007,,RR,222,224,12,218,Dao 2007,
+17,CD009526.PUB2,Ovarian surgery for symptom relief in women with polycystic ovary syndrome,Improvement in androgenic symptoms at 6 months,Laparoscopic ovarian drilling,Gonadotropins,Farquhar,2002,,OR,7,29,2,21,Farquhar 2002,
+18,CD001122.PUB5,Laparoscopic ovarian drilling for ovulation induction in women with anovulatory polycystic ovary syndrome,Live birth,Laparoscopic ovarian drilling,Medical ovulation induction,Farquhar,2002,,OR,4,29,4,21,Farquhar 2002,
+19,CD001122.PUB5,Laparoscopic ovarian drilling for ovulation induction in women with anovulatory polycystic ovary syndrome,Multiple pregnancy,Laparoscopic ovarian drilling,Medical ovulation induction,Farquhar,2002,,OR,0,29,0,21,Farquhar 2002,
+20,CD007223.PUB4,Medical treatments for incomplete miscarriage,"Complete miscarriage
+",Suction aspiration,Vaginal or oral misoprostol,Ganguly,2010,,RR,37,37,63,77,Ganguly 2010,subgroup (incomplete miscarriage)
+21,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,"Complete miscarriage
+",Suction aspiration,Misoprostol,Ganguly,2010,,RR,59,60,98,120,Ganguly 2010,subgroup (incomplete miscarriage)
+22,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,Composite outcome of death or serious complication,Suction aspiration,Misoprostol,Ganguly,2010,,RR,1,60,3,120,Ganguly 2010,
+23,CD009526.PUB2,Ovarian surgery for symptom relief in women with polycystic ovary syndrome,Menstrual regularity at 6 months LOD v medical interventions,Laparoscopic ovarian drilling,Gonadotropins,Kaya,2005,,OR,12,17,2,18,Kaya 2005,
+24,CD001122.PUB5,Laparoscopic ovarian drilling for ovulation induction in women with anovulatory polycystic ovary syndrome,Multiple pregnancy,Laparoscopic ovarian drilling,Medical ovulation induction,Kaya,2005,,OR,0,17,2,18,Kaya 2005,
+25,CD001122.PUB5,Laparoscopic ovarian drilling for ovulation induction in women with anovulatory polycystic ovary syndrome,Live birth,Laparoscopic ovarian drilling,Medical ovulation induction,Liu,2015,,OR,16,70,27,71,Liu 2015,
+26,CD010287.PUB3,Aromatase inhibitors (letrozole) for subfertile women with polycystic ovary syndrome,Live birth,Laparoscopic ovarian drilling,Letrozele,Liu,2015,,RR,16,70,27,71,Liu 2015,
+27,CD007223.PUB4,Medical treatments for incomplete miscarriage,"Complete miscarriage
+",Suction aspiration,Vaginal or oral misoprostol,Montesinos,2011,,RR,97,97,100,106,Montesinos 2011,
+28,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,"Complete miscarriage
+",Suction aspiration,Misoprostol,Montesinos,2011,,RR,97,97,100,106,Montesinos 2011,
+29,CD007223.PUB4,Medical treatments for incomplete miscarriage,Death or serious complication,Suction aspiration,Vaginal or oral misoprostol,Montesinos,2011,,RR,0,97,0,106,Montesinos 2011,
+30,CD007223.PUB4,Medical treatments for incomplete miscarriage,Surgical evacuation,Suction aspiration,Vaginal or oral misoprostol,Montesinos,2011,,RR,97,97,6,106,Montesinos 2011,
+31,CD007223.PUB4,Medical treatments for incomplete miscarriage,"Complete miscarriage
+",Suction aspiration,Vaginal or oral misoprostol,Moodliar,2005,,RR,47,47,43,47,Moodliar 2005,duplicates reclassify the surgery arm as surgical abortion
+32,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,"Complete miscarriage
+",Dilatation and curretage,Misoprostol,Moodliar,2005,,RR,47,47,43,47,Moodliar 2005,right classification of surgical arm
+33,CD007223.PUB4,Medical treatments for incomplete miscarriage,Surgical evacuation,Suction aspiration,Vaginal or oral misoprostol,Moodliar,2005,,RR,47,47,4,47,Moodliar 2005,
+34,CD001122.PUB5,Laparoscopic ovarian drilling for ovulation induction in women with anovulatory polycystic ovary syndrome,Live birth,Laparoscopic ovarian drilling,Medical ovulation induction,Palomba,2010,,OR,13,25,12,25,Palomba 2010,
+35,CD009526.PUB2,Ovarian surgery for symptom relief in women with polycystic ovary syndrome,Menstrual regularity at 6 months LOD v medical interventions,Laparoscopic ovarian drilling,Metformin + Clomiphene,Palomba,2010,,OR,17,25,20,25,Palomba 2010,
+36,CD001122.PUB5,Laparoscopic ovarian drilling for ovulation induction in women with anovulatory polycystic ovary syndrome,Multiple pregnancy,Laparoscopic ovarian drilling,Medical ovulation induction,Palomba,2010,,OR,0,25,0,25,Palomba 2010,
+37,CD007223.PUB4,Medical treatments for incomplete miscarriage,"Complete miscarriage
+",Suction aspiration,Vaginal or oral misoprostol,Patua,2013,,RR,48,50,42,50,Patua 2013,adjusted the number copy paste error across the rows
+38,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,"Complete miscarriage
+",Suction aspiration,Misoprostol,Patua,2013,,RR,48,50,42,50,Patua 2013,adjusted the number copy paste error across the rows
+39,CD007223.PUB4,Medical treatments for incomplete miscarriage,Surgical evacuation,Suction aspiration,Vaginal or oral misoprostol,Patua,2013,,RR,50,50,4,50,Patua 2013,
+40,CD007223.PUB4,Medical treatments for incomplete miscarriage,"Complete miscarriage
+",Suction aspiration,Vaginal or oral misoprostol,Sahin,2001,,RR,40,40,38,40,Sahin 2001,
+41,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,"Complete miscarriage
+",Suction aspiration,Misoprostol,Sahin,2001,,RR,40,40,38,40,Sahin 2001,
+42,CD007223.PUB4,Medical treatments for incomplete miscarriage,Surgical evacuation,Suction aspiration,Vaginal or oral misoprostol,Sahin,2001,,RR,40,40,1,40,Sahin 2001,
+43,CD007223.PUB4,Medical treatments for incomplete miscarriage,"Complete miscarriage
+",Suction aspiration,Vaginal or oral misoprostol,Shwekerela,2007,,RR,150,150,149,150,Shwekerela 2007,
+44,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,"Complete miscarriage
+",Suction aspiration,Misoprostol,Shwekerela,2007,,RR,150,150,149,150,Shwekerela 2007,
+45,CD007223.PUB4,Medical treatments for incomplete miscarriage,Surgical evacuation,Suction aspiration,Vaginal or oral misoprostol,Shwekerela,2007,,RR,150,150,1,150,Shwekerela 2007,
+46,CD007223.PUB4,Medical treatments for incomplete miscarriage,"Complete miscarriage
+",Suction aspiration,Vaginal or oral misoprostol,Taylor,2011,,RR,109,110,106,108,Taylor 2011,
+47,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,"Complete miscarriage
+",Suction aspiration,Misoprostol,Taylor,2011,,RR,109,110,106,108,Taylor 2011,
+48,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,Composite outcome of death or serious complication,Suction aspiration,Misoprostol,Taylor,2011,,RR,0,110,1,108,Taylor 2011,
+49,CD007223.PUB4,Medical treatments for incomplete miscarriage,Death or serious complication,Suction aspiration,Vaginal or oral misoprostol,Taylor,2011,,RR,0,110,0,108,Taylor 2011,
+50,CD007223.PUB4,Medical treatments for incomplete miscarriage,Surgical evacuation,Suction aspiration,Vaginal or oral misoprostol,Taylor,2011,,RR,110,110,1,108,Taylor 2011,
+51,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,"Complete miscarriage
+",Suction aspiration,Misoprostol and mifepristone,Trinder,2006,,RR,290,310,192,308,Trinder 2006,
+52,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,Composite outcome of death or serious complication,Suction aspiration,Misoprostol and mifepristone,Trinder,2006,,RR,0,310,3,308,Trinder 2006,
+53,CD007223.PUB4,Medical treatments for incomplete miscarriage,Surgical evacuation,Suction aspiration,Vaginal or oral misoprostol,Trinder,2006,,RR,78,92,26,90,Trinder 2006,
+54,CD007223.PUB4,Medical treatments for incomplete miscarriage,"Complete miscarriage
+",Suction aspiration,Vaginal or oral misoprostol,Weeks,2005,,RR,75,82,103,107,Weeks 2005,
+55,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,"Complete miscarriage
+",Suction aspiration,Misoprostol,Weeks,2005,,RR,75,82,103,107,Weeks 2005,
+56,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,Composite outcome of death or serious complication,Suction aspiration,Misoprostol,Weeks,2005,,RR,0,82,0,107,Weeks 2005,
+57,CD007223.PUB4,Medical treatments for incomplete miscarriage,Surgical evacuation,Suction aspiration,Vaginal or oral misoprostol,Weeks,2005,,RR,76,82,4,107,Weeks 2005,
+58,CD007223.PUB4,Medical treatments for incomplete miscarriage,"Complete miscarriage
+",Suction aspiration,Vaginal or oral misoprostol,Zhang,2005,,RR,8,9,25,30,Zhang 2005,subgroup (incomplete miscarriage)
+59,CD012602.PUB2,Methods for managing miscarriage: a network meta_analysis,"Complete miscarriage
+",Suction aspiration,Misoprostol,Zhang,2005,,RR,143,148,412,488,Zhang 2005,subgroup (incomplete miscarriage)
+60,CD007223.PUB4,Medical treatments for incomplete miscarriage,Death or serious complication,Suction aspiration,Vaginal or oral misoprostol,Zhang,2005,,RR,0,9,1,29,Zhang 2005,
+61,CD007223.PUB4,Medical treatments for incomplete miscarriage,Surgical evacuation,Suction aspiration,Vaginal or oral misoprostol,Zhang,2005,,RR,9,9,4,30,Zhang 2005,

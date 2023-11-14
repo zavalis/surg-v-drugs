@@ -18,26 +18,32 @@ library(tidyr)
 library(ggplot2)
 
 
-df_incl=read.delim('./input/included_studies.csv',sep=',')
-df_data=read.delim('./input/extracted_data.csv',sep=',')
+df_incl=read.delim('./data/review_data/included_studies.csv',sep=',')
+df_summary=read.delim('./data/review_data/summary_data.csv', sep=',')
 
-# with specialty
-t=df_incl%>%select(c(X.source..id,specialty))
-df_data_spec=join(df_data, t, by='X.source..id', type="left")
+df_data=read.delim('./data/rct_data/extracted_data.csv',sep=',')
+
+df_search=read.delim('./data/screening/search.csv',sep=',')
+
+df_corr_au=read.csv('./data/review_data/characteristics_of_reviews.csv')
+
+# add specialty column to data
+temp=df_incl%>%select(c(X.source..id,specialty))
+df_data_spec=join(df_data, temp, by='X.source..id', type="left")
 #df_data_spec=df_data_spec%>%select(-29)
 
-df_search=read.delim('./input/search.csv',sep=',')
-df_summary=read.delim('./input/summary_data.csv', sep=',')
-
+# gets the number of included studies
 first_round=nrow(df_incl)
 
+# gets the number of studies with available comparisons
 df_incl=df_incl%>%mutate(data_available=ifelse(X.source..id %in% unique(df_data$X.source..id), 1,0))
 
+# gives RCTs
 df_data$IDstudy=paste(df_data$study, df_data$year.of.study)
-df_corr_au=read.delim('./input/characteristics_of_reviews.csv',sep=',')
 # adds whether the corresponding author was a surgeon or not
-df_summary=left_join(df_summary,df_corr_au, by='X.source..id')
-df_summary=join(df_summary, t, by='X.source..id', type="left")
+
+df_summary=join(df_summary, df_corr_au, by='X.source..id', type='left')
+df_summary=join(df_summary, temp, by='X.source..id', type="left")
 
 # consider not using as you got to do it by outcome
 #uniquereviews=df_summary[!duplicated(df_summary$X.source..id),]
@@ -86,7 +92,7 @@ knitr::kable(temp, col.names=c('Surgical arm','Drug arm','Disease', 'Outcome','E
 \newpage
 Table 3. Review direction of effects of reviews compared to re-analysis (second is the reanalysis)
 ```{r Table ox, echo=FALSE, include=TRUE}
-df_re_anal=read.csv('./input/re_meta_manual.csv')[1:105,]
+df_re_anal=read.csv('./data/review_data/re_meta_manual.csv')[1:105,]
 
            
 
@@ -97,12 +103,12 @@ knitr::kable(table(df_re_anal$direction_re))
 \newpage
 Table 4. Preponderance of direction of RCT results, and Journal type
 ```{r Table o, echo=FALSE, include=TRUE}
-df_rct=read.csv('./input/journal_RCT.csv')
+df_rct=read.csv('./data/rct_data/journal_rct.csv')
 
-knitr::kable(table(df_rct$Journal_type,df_rct$direction))
+knitr::kable(table(df_rct$journal_type,df_rct$direction))
 ```
 ```{r Table oxx, echo=FALSE, include=TRUE}
-df_rct=read.csv('./input/journal_RCT.csv')
+df_rct=read.csv('./data/rct_data/journal_rct.csv')
 
 knitr::kable(table(df_summary$outcome_type,df_summary$direction))
 ```
@@ -131,7 +137,7 @@ knitr::kable(temp, col.names=c("Specialty","Very Low", "Low","Moderate","High","
 \newpage
 
 # Supplementary material
-[titlepage]
+[page]
 
 \newpage
 
