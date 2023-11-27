@@ -149,6 +149,7 @@ PSST=(P-pi)/sqrt((pi*(1-pi))/k)
 k=245
 TESS_all= (ESS-.05)/(.0475/k)^.5 # ~7.95
 TESS_all>1.64 # TRUE
+pt(q=TESS_all, df=1, lower.tail=TRUE)
 
 
 

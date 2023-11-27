@@ -48,7 +48,7 @@ cont_ma=df_md%>%
                                                           sm=first(fx_type),
                                                           method.random.ci = "HK"
                                                           )
-                                                          )$random)[1]),
+                                                          )$random)['TE']),
                                  
                                  ci.lb=(unlist(summary(metacont(data=.x,
                                                                 n.e=all.surg,
@@ -58,7 +58,7 @@ cont_ma=df_md%>%
                                                          mean.c=mean.control,
                                                          sd.c=SD.control,
                                                          sm=first(fx_type),
-                                                         method.random.ci = "HK"))$random)[3]),
+                                                         method.random.ci = "HK"))$random)['lower']),
                                  
                                  ci.ub=(unlist(summary(metacont(data=.x,
                                                                 n.e=all.surg,
@@ -68,7 +68,7 @@ cont_ma=df_md%>%
                                                          mean.c=mean.control,
                                                          sd.c=SD.control,
                                                          sm=first(fx_type),
-                                                         method.random.ci = "HK"))$random)[4]),
+                                                         method.random.ci = "HK"))$random)['upper']),
                                  
                                  I2=(unlist(summary(metacont(data=.x,
                                                              n.e=all.surg,
@@ -99,7 +99,7 @@ cat_ma=df_nonmd%>%
                                                             all.control, 
                                                             method='MH',
                                                             method.random.ci = "HK", 
-                                                            sm=first(fx_type)))$random)[1]),
+                                                            sm=first(fx_type)))$random)['TE']),
                           
                           ci.lb=exp(unlist(summary(metabin(data=.x,
                                                            event.surg,
@@ -108,7 +108,7 @@ cat_ma=df_nonmd%>%
                                                            all.control, 
                                                            method='MH',
                                                            method.random.ci = "HK",
-                                                           sm=first(fx_type)))$random)[3]),
+                                                           sm=first(fx_type)))$random)['lower']),
                           
                           ci.ub=exp(unlist(summary(metabin(data=.x,
                                                            event.surg,
@@ -117,7 +117,7 @@ cat_ma=df_nonmd%>%
                                                            all.control, 
                                                            method='MH',
                                                            method.random.ci = "HK",
-                                                           sm=first(fx_type)))$random)[4]),
+                                                           sm=first(fx_type)))$random)['upper']),
                          
           
                           I2=(unlist(summary(
